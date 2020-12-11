@@ -8,11 +8,8 @@
   <h1>Create Shift Report</h1>
 
   <?= \Config\Services::validation()->listErrors(); ?>
-  <?php if (isset($report)) : ?>
-  <form action="<?= site_url('/update') ?>" method="post">
-  <?php else : ?>
-  <form action="<?= site_url('/new') ?>" method="post">
-  <?php endif ?>
+  <?php $action = isset($report) ? '/update/'.$report->id : '/new'; ?>
+  <?= form_open($action) ?>
     <?= csrf_field() ?>
     <?= $report_renderer->renderField([
         'field' => 'reporter_name', 

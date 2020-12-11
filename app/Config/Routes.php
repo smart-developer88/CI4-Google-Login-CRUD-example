@@ -34,6 +34,7 @@ $routes->get('/', 'Home::index');
 $routes->get('/new', 'Home::create');
 $routes->post('/new', 'Home::store');
 $routes->get('report/(:num)', 'Home::edit/$1');
+$routes->post('update/(:num)', 'Home::update/$1');
 
 /**
  * --------------------------------------------------------------------

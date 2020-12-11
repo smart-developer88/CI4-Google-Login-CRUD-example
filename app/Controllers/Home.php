@@ -50,4 +50,14 @@ class Home extends BaseController
 		return $this->renderContent(['add_report', 'modal'], \compact('houses', 'report', 'residents'));
 	}
 
+	public function update($id = null) {
+			$reportsModel = new ReportsModel();
+			$report = new Report();
+			$report->id = $id;
+			// die($report->id);
+			$report->fill($this->request->getPost());
+			$reportsModel->save($report);
+			return $this->response->redirect(site_url('/'));
+        }
+	}
 }
