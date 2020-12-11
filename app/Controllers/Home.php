@@ -20,4 +20,34 @@ class Home extends BaseController
 
 	//--------------------------------------------------------------------
 
+	public function create() {
+		$housesModel = new HousesModel();
+		$residentsModel = new ResidentsModel();
+
+		$houses = $housesModel->findAll();
+		$residents = $residentsModel->findAll();
+
+		return $this->renderContent('add_report', \compact('houses', 'residents'));
+	}
+
+	public function store() {
+		$reportsModel = new ReportsModel();
+		$report = new Report();
+		$report->fill($this->request->getPost());
+		$reportsModel->save($report);
+        return $this->response->redirect(site_url('/'));
+	}
+
+	public function edit($id = null) {
+		$housesModel = new HousesModel();
+		$reportsModel = new ReportsModel();
+		$residentsModel = new ResidentsModel();
+
+		$houses = $housesModel->findAll();
+		$report = $reportsModel->find($id);
+		$residents = $residentsModel->findAll();
+
+		return $this->renderContent(['add_report', 'modal'], \compact('houses', 'report', 'residents'));
+	}
+
 }
