@@ -45,4 +45,14 @@ class BaseController extends Controller
 
 	}
 
+	public function renderContent($views, $data = array()) {
+		$list = \is_array($views) ? $views : [$views];
+		echo view('templates/header', $data);
+		foreach ($list as $view) {
+			echo view($view, $data);
+		}
+		echo view('templates/footer', $data);
+		return;
+	}
+
 }
