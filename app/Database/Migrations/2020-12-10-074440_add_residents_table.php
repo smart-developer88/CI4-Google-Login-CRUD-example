@@ -15,11 +15,18 @@ class AddResidentsTable extends Migration
             ],
             'resident_first_name' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '100',
+                'constraint' => '32',
             ],
             'resident_last_name'  => [
                 'type'       => 'VARCHAR',
-                'constraint' => '100',
+                'constraint' => '32',
+            ],
+            
+            'created_at' => [
+                'type'       => 'datetime',
+            ],
+            'updated_at' => [
+                'type'       => 'datetime',
             ],
         ]);
         $this->forge->addKey('resident_id', true);

@@ -21,9 +21,10 @@ class AddShiftReportTable extends Migration
             'reporter_name'                     => [
                 'type'       => 'varchar',
                 'constraint' => 64,
+                'null'       => true,
             ],
             'shift_date'                        => [
-                'type' => 'datetime',
+                'type' => 'date',
             ],
             'shift_timing'                      => [
                 'type'       => 'varchar',
@@ -176,6 +177,13 @@ class AddShiftReportTable extends Migration
             'notes'                             => [
                 'type'       => 'VARCHAR',
                 'constraint' => '1024',
+            ],
+            
+            'created_at' => [
+                'type'       => 'datetime',
+            ],
+            'updated_at' => [
+                'type'       => 'datetime',
             ],
         ]);
         $this->forge->addKey('report_id', true);

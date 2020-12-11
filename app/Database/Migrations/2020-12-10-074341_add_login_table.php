@@ -21,6 +21,13 @@ class AddLoginTable extends Migration
                 'type' => 'TIMESTAMP',
                 'null' => true,
             ],
+            
+            'created_at' => [
+                'type'       => 'datetime',
+            ],
+            'updated_at' => [
+                'type'       => 'datetime',
+            ],
         ]);
         $this->forge->addKey('login_id', true);
         $this->forge->createTable('login');

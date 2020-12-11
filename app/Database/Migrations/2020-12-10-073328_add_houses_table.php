@@ -17,6 +17,13 @@ class AddHousesTable extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '100',
             ],
+            
+            'created_at' => [
+                'type'       => 'datetime',
+            ],
+            'updated_at' => [
+                'type'       => 'datetime',
+            ],
         ]);
         $this->forge->addKey('house_id', true);
         $this->forge->createTable('houses');
