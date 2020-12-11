@@ -8,7 +8,7 @@
   <h1>Create Shift Report</h1>
 
   <?= \Config\Services::validation()->listErrors(); ?>
-  <?php $action = isset($report) ? '/update/'.$report->id : '/new'; ?>
+  <?php $action = isset($report) && isset($report->id) ? '/update/'.$report->id : '/new'; ?>
   <?= form_open($action) ?>
     <?= csrf_field() ?>
     <?= $report_renderer->renderField([

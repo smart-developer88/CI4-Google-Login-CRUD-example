@@ -11,12 +11,13 @@ class ReportRenderer {
     public function renderToggleButtons($params) {
         $checkboxes = "";
         foreach ($params as $param) {
-            $val = isset($this->report) ? $this->report->__get($param['field']) : false;
-            $label = $param['label'];
+            $field = isset($param['field']) ? $param['field'] : '';
+            $val = isset($this->report) ? $this->report->{$param['field']} : false;
+            $label = isset($param['label']) ? $param['label'] : '';
             $checked = $val ? "checked" : "";
             $checkboxes .= <<<HTML
             <label class="btn btn-primary flex-cell mgh-15">
-                <input type="checkbox" $checked autocomplete="off"> $label
+                <input type="checkbox" name="$field" $checked autocomplete="off"> $label
             </label>
             HTML;
         }
@@ -95,6 +96,9 @@ class ReportRenderer {
             if ($type === 'checkbox') {
                 $checkedSection = $val ? "checked" : "";
             }
+            if ($type === 'Date') {
+                $val = $val ? $val->toDateString() : '';
+            }
             if (!\in_array($type, ['text', 'time', 'checkbox', 'Date', 'textarea'])) {
                 echo "$type : $val";
             }
@@ -102,6 +106,8 @@ class ReportRenderer {
         $element = "";
         if ($type === 'textarea') {
             $element = "<textarea name=\"$field\" $placeholder_field>$val</textarea>";
+        } else if ($type === 'checkbox') {
+            $element = "<input name=\"$field\" type=\"checkbox\" $checkedSection />";
         } else {
             $element = "<input name=\"$field\" type=\"$type\" $checkedSection value=\"$val\" $placeholder_field />";
         }
