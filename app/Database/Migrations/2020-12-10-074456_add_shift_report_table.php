@@ -7,7 +7,7 @@ class AddShiftReportTable extends Migration
     public function up()
     {
         $this->forge->addField([
-            'report_id'                         => [
+            'id'                         => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
@@ -175,8 +175,7 @@ class AddShiftReportTable extends Migration
             ],
 
             'notes'                             => [
-                'type'       => 'VARCHAR',
-                'constraint' => '1024',
+                'type'       => 'text',
             ],
             
             'created_at' => [
@@ -186,9 +185,9 @@ class AddShiftReportTable extends Migration
                 'type'       => 'datetime',
             ],
         ]);
-        $this->forge->addKey('report_id', true);
-        $this->forge->addForeignKey('resident_id', 'residents', 'resident_id');
-        $this->forge->addForeignKey('house_id', 'houses', 'house_id');
+        $this->forge->addKey('id', true);
+        $this->forge->addForeignKey('house_id', 'houses', 'id');
+        $this->forge->addForeignKey('resident_id', 'residents', 'id');
         $this->forge->createTable('shift_reports');
     }
 

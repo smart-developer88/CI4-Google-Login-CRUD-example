@@ -7,7 +7,7 @@ class AddResidentsTable extends Migration
     public function up()
     {
         $this->forge->addField([
-            'resident_id'         => [
+            'id'         => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
@@ -29,7 +29,7 @@ class AddResidentsTable extends Migration
                 'type'       => 'datetime',
             ],
         ]);
-        $this->forge->addKey('resident_id', true);
+        $this->forge->addKey('id', true);
         $this->forge->createTable('residents');
     }
 

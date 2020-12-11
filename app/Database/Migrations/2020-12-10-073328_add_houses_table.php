@@ -7,7 +7,7 @@ class AddHousesTable extends Migration
     public function up()
     {
         $this->forge->addField([
-            'house_id'   => [
+            'id'   => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
@@ -25,7 +25,7 @@ class AddHousesTable extends Migration
                 'type'       => 'datetime',
             ],
         ]);
-        $this->forge->addKey('house_id', true);
+        $this->forge->addKey('id', true);
         $this->forge->createTable('houses');
     }
 
