@@ -25,6 +25,11 @@
 		],
 		"test": "phpunit"
 	},
+    "extra": {
+        "google/apiclient-services": [
+            "Oauth2"
+        ]
+    },
 	"support": {
 		"forum": "http://forum.codeigniter.com/",
 		"source": "https://github.com/codeigniter4/CodeIgniter4",

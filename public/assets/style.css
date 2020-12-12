@@ -127,3 +127,8 @@ p{text-align: Center; max-width: 80%;margin:auto;}
   font-size: 22px;
   margin: 10px auto;
 }
+
+.navbar li.btn-logout {
+  text-align: right;
+  border-right: none;
+}

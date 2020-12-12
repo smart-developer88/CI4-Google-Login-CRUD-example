@@ -1,60 +1,46 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php namespace App\Libraries;
 
 /*
  * Login with Google for Codeigniter
  *
- * Library for Codeigniter to authenticate users through Google OAuth 2.0 and get user profile info
+ * Library for Codeigniter4 to authenticate users through Google OAuth 2.0 and get user profile info
  *
- * @authors     Harsha G, Nick Humphries
- * @license     MIT
- * @link        https://github.com/angel-of-death/Codeigniter-Google-OAuth-Login
+ * @authors     Jinzhe Cui
  */
 
 class Google {
 	public function __construct()
 	{
-		$this->ci =& get_instance();
+		$config = new \Config\Google();
+		$this->session = \Config\Services::session();
 
-        include_once __DIR__ . '/../../vendor/autoload.php';
+		$this->client = new \Google\Client();
+        $this->client->setApplicationName($config->applicationName);
 
-		$this->ci->load->config('google');
-
-		$this->ci->load->library('session');
-
-		$this->client = new Google_Client();
-        $this->client->setApplicationName($this->ci->config->item('applicationName'));
-
-        $this->client->setClientId($this->ci->config->item('clientId'));
-        $this->client->setClientSecret($this->ci->config->item('clientSecret'));
-        $this->client->setRedirectUri($this->ci->config->item('redirectUri'));
-        $this->client->setDeveloperKey($this->ci->config->item('apiKey'));
+        $this->client->setClientId($config->clientId);
+        $this->client->setClientSecret($config->clientSecret);
+        $this->client->setRedirectUri($config->redirectUri);
+        $this->client->setDeveloperKey($config->apiKey);
 
         $this->client->addScope('https://www.googleapis.com/auth/userinfo.email');
         $this->client->setAccessType('offline');
 
-		if($this->ci->session->userdata('refreshToken')!=null)
-		{
-			$this->loggedIn = true;
+		$this->loggedIn = false;
 
+		if($this->session->accessToken!=null)
+		{
+			$this->client->setAccessToken($this->session->accessToken);
 			if($this->client->isAccessTokenExpired())
 			{
-				$this->client->refreshToken($this->ci->session->userdata('refreshToken'));
-        		
-        		$accessToken = $this->client->getAccessToken();
-
-        		$this->client->setAccessToken($accessToken);
+				$accessToken = $this->client->getAccessToken();
+	
+				if($accessToken!=null)
+				{
+					$this->client->revokeToken($accessToken);
+				}
+			} else {				
+				$this->loggedIn = true;
 			}
-		}
-		else
-		{
-			$accessToken = $this->client->getAccessToken();
-
-			if($accessToken!=null)
-			{
-				$this->client->revokeToken($accessToken);
-			}
-
-			$this->loggedIn = false;
 		}
 	}
 
@@ -73,25 +59,22 @@ class Google {
 		$this->client->authenticate($_GET['code']);
 
 		$accessToken = $this->client->getAccessToken();
-
 		$this->client->setAccessToken($accessToken);
 
-		if(isset($accessToken['refresh_token']))
-		{
-			$this->ci->session->set_userdata('refreshToken', $accessToken['refresh_token']);
-		}
+		$this->session->set('accessToken', $accessToken);
+		$this->loggedIn = true;
 	}
 
 	public function getUserInfo()
 	{
-		$service = new Google_Service_Oauth2($this->client);
+		$service = new \Google_Service_Oauth2($this->client);
 
 		return $service->userinfo->get();
 	}
 
 	public function logout()
 	{
-		$this->ci->session->unset_userdata('refreshToken');
+		unset($this->session->refreshToken);
 
 		$accessToken = $this->client->getAccessToken();
 

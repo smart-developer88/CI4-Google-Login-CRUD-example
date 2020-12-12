@@ -18,7 +18,7 @@ class AddLoginTable extends Migration
                 'constraint' => '100',
             ],
             'login_datetime' => [
-                'type' => 'TIMESTAMP',
+                'type' => 'datetime',
                 'null' => true,
             ],
             
@@ -30,13 +30,13 @@ class AddLoginTable extends Migration
             ],
         ]);
         $this->forge->addKey('login_id', true);
-        $this->forge->createTable('login');
+        $this->forge->createTable('logins');
     }
 
     //--------------------------------------------------------------------
 
     public function down()
     {
-        $this->forge->dropTable('login');
+        $this->forge->dropTable('logins');
     }
 }
