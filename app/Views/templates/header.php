@@ -16,7 +16,8 @@
         
         <div class="col-md-12 navbar">
             <ul class="">
-                <a href="shiftreport.html" class="active"><li class="float-left">Shift Reports</li></a>                
+                <a href="/" class="active"><li class="float-left">Shift Reports</li></a>                
                 <a href="incident-reports.html" class=""><li class="float-left">Incident Reports <img src="/sitepics/excl.png" style="width:20px; float-left"/> </li></a>
+                <a href="/logout"><li class="float-right btn-logout">Logout</li></a>
             </ul>
         </div>
